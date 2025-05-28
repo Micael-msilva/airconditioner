@@ -9,14 +9,14 @@
 
 <body class="bg-blue-50 min-h-screen flex flex-col">
 
-  <?php include 'navbar.php'; ?>
+  <?php include 'views/shared/navbar.php'; ?>
 
   <?php
     $actions = [
         ['label' => 'View Tasks', 'href' => 'tasks.php'],
         ['label' => 'Create Task', 'href' => 'create_task.php'],
         ['label' => 'Update Profile', 'href' => 'profile.php'],
-        ['label' => 'Create a PMOC', 'href' => 'pmoc.php'],
+        ['label' => 'Create a PMOC', 'href' => 'views/pmoc/pmoc.php'],
 
     ];
   ?>

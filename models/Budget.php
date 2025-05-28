@@ -17,16 +17,14 @@ class Budget{
      * @param float $value
      */
     public function __construct($id, Client $client, Technician $technician, AirConditioner $airConditioner, 
-    $serviceAddress, $installationDate, $status, $description, $value) {
-        $this->id = $id;
-        $this->client = $client;
-        $this->technician = $technician;
-        $this->airConditioner = $airConditioner;
-        $this->serviceAddress = $serviceAddress;
-        $this->installationDate = $installationDate;
-        $this->status = $status;
-        $this->description = $description;
-        $this->value = $value;
+    $serviceAddress, $description, $value) {
+        $this->setId($id);
+        $this->setClient($client);
+        $this->setTechnician($technician);
+        $this->setAirConditioner($airConditioner);
+        $this->setServiceAddress($serviceAddress);
+        $this->setDescription($description);
+        $this->setValue($value);
         }
 
         public function getId() {
@@ -67,22 +65,6 @@ class Budget{
 
         public function setServiceAddress($serviceAddress) {
         $this->serviceAddress = $serviceAddress;
-        }
-
-        public function getInstallationDate() {
-        return $this->installationDate;
-        }
-
-        public function setInstallationDate($installationDate) {
-        $this->installationDate = $installationDate;
-        }
-
-        public function getStatus() {
-        return $this->status;
-        }
-
-        public function setStatus($status) {
-        $this->status = $status;
         }
 
         public function getDescription() {

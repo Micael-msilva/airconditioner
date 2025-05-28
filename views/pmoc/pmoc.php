@@ -9,7 +9,7 @@
 
 <body class="bg-blue-50 min-h-screen flex flex-col">
 
-  <?php include 'navbar.php'; ?>
+  <?php include '/home/secret/Desktop/airconditioner/views/pmoc/pmoc.php'; ?>
 
   <?php
     // Simulando PMOCs cadastrados

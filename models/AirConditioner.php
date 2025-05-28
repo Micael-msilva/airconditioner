@@ -1,49 +1,44 @@
 <?php
 class AirConditioner {
     private $brand;
-    private $model;
-    private $serialNumber;
+    private $id;
     private $description;
+    private $model;
+
 
     /**
      * Constructor for the AirConditioner class
      * @param string $brand
-     * @param string $model
-     * @param string $serialNumber
+     * @param string $id
      * @param string|null $description
      */
-    public function __construct($brand, $model, $serialNumber, $description) {
-        $this->setBrand($brand);
-        $this->setModel($model);
-        $this->setSerialNumber($serialNumber);
-        $this->setdescription($description);
+    public function __construct($brand, $id, $description) {
+    $this->setBrand($brand);
+    $this->setId($id);
+    $this->setDescription($description);
     }
-    // Getter and Setter for Brand
+
     public function getBrand() {
-        return $this->brand;
+    return $this->brand;
     }
+
     public function setBrand($brand) {
-        $this->brand = $brand;
+    $this->brand = $brand;
     }
-    // Getter and Setter for Model
-    public function getModel() {
-        return $this->model;
+
+    public function getId() {
+    return $this->id;
     }
-    public function setModel($model) {
-        $this->model = $model;
+
+    public function setId($id) {
+    $this->id = $id;
     }
-    // Getter and Setter for Serial Number
-    public function getSerialNumber() {
-        return $this->serialNumber;
-    }
-    public function setSerialNumber($serialNumber) {
-        $this->serialNumber = $serialNumber;
-    }
-    // Getter and Setter for Installation Date
+
     public function getDescription() {
-        return $this->Description;
+    return $this->description;
     }
+
     public function setDescription($description) {
-        $this->description = $description;
+    $this->description = $description;
     }
 }

@@ -2,8 +2,8 @@
 $navLinks = [
     ['label' => 'Home', 'href' => 'home.php'],
     ['label' => 'Tasks', 'href' => 'tasks.php'],
-    ['label' => 'Budget', 'href' => 'budget.php'],
-    ['label' => 'PMOC', 'href' => 'pmoc.php'],
+    ['label' => 'Budget', 'href' => 'views/budget/budget.php'],
+    ['label' => 'PMOC', 'href' => 'views/pmoc/pmoc.php'],
     ['label' => 'Profile', 'href' => 'profile.php'],
     ['label' => 'Logout', 'href' => 'logout.php', 'class' => 'text-blue-600'],
 ];
