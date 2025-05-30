@@ -4,7 +4,7 @@ class Conexao {
     private static $host = 'localhost';
     private static $dbName = 'airconditioner';
     private static $username = 'root';
-    private static $password = '';
+    private static $password = 'bancodedados';
     private static $conn = null;
 
     /**

@@ -1,28 +1,42 @@
 <?php
 
 class Technician {
+    // Atributos privados
     private $name;
-    private $cpfCnpj;
+    private $email;
     private $phone;
-    private $address;
+    private $cpfCnpj;
     private $crea;
+    private $address;
+    private $id;
 
     /**
      * Construtor da classe Technician
      *
-     * @param string $name
-     * @param string $cpfCnpj
-     * @param string $phone
-     * @param string|null $address
-     * @param string|null $crea
+     * @param string $name Nome do técnico
+     * @param string $email E-mail do técnico
+     * @param string $phone Telefone do técnico
+     * @param string $cpfCnpj CPF ou CNPJ do técnico
+     * @param string|null $crea CREA do técnico (opcional)
+     * @param string|null $address Endereço do técnico (opcional)
      */
-    public function __construct($name, $cpfCnpj, $phone, $address = null, $crea = null) {
+    public function __construct($name, $email, $phone, $cpfCnpj, $id=0, $crea = null, $address = null) {
         $this->setName($name);
-        $this->setCpfCnpj($cpfCnpj);
+        $this->setEmail($email);
         $this->setPhone($phone);
-        $this->setAddress($address);
+        $this->setCpfCnpj($cpfCnpj);
         $this->setCrea($crea);
+        $this->setAddress($address);
     }
+
+    public function getEmail(){
+        return $this->email;
+    }
+
+    public function setEmail($email){
+        $this->email = $email;
+    }
+
     public function getName() {
         return $this->name;
     }
@@ -42,6 +56,8 @@ class Technician {
     public function getPhone() {
         return $this->phone;
     }
+
+
 
     public function setPhone($phone) {
         $this->phone = $phone;

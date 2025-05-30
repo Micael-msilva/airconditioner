@@ -1,9 +1,10 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/models/Client.php';
-require_once __DIR__ . '/models/Technician.php';
-require_once __DIR__ . '/models/Budget.php';
+require_once __DIR__ . '/../../models/Client.php';
+require_once __DIR__ . '/../../models/Technician.php';
+require_once __DIR__ . '/../../models/Budget.php';
+
 
 // Mock AirConditioner class if not present
 if (!class_exists('AirConditioner')) {

@@ -1,11 +1,11 @@
 <?php
 $navLinks = [
-    ['label' => 'Home', 'href' => 'home.php'],
+    ['label' => 'Home', 'href' => '/../../index.php'],
     ['label' => 'Tasks', 'href' => 'tasks.php'],
-    ['label' => 'Budget', 'href' => 'views/budget/budget.php'],
-    ['label' => 'PMOC', 'href' => 'views/pmoc/pmoc.php'],
-    ['label' => 'Profile', 'href' => 'profile.php'],
-    ['label' => 'Logout', 'href' => 'logout.php', 'class' => 'text-blue-600'],
+    ['label' => 'Budget', 'href' => '/../views/budget/budget.php'],
+    ['label' => 'PMOC', 'href' => '/../views/pmoc/pmoc.php'],
+    ['label' => 'Profile', 'href' => '/../../profile.php'],
+    ['label' => 'Logout', 'href' => '/../../logout.php', 'class' => 'text-blue-600'],
 ];
 ?>
 

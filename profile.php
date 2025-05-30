@@ -1,15 +1,35 @@
 <?php
-require_once __DIR__ . '/models/Technician.php';
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-// Example: In a real app, fetch these from DB or session
-$technician = new Technician(
-    "John Doe",
-    "AC123456",
-    "(123) 456-7890",
-    "123 Main St",
-    "AC123456"
-);
+require_once __DIR__ . "/models/Technician.php";
+require_once __DIR__ . "/models/dao/TechnicianDao.php";
+
+// Verifica se o formulário foi enviado e se a chave "name" existe em $_POST
+if (isset($_POST['name']) && !empty($_POST['name'])) {
+    // Cria Technician
+    $technician = new Technician(
+        $_POST['name'],
+        $_POST['email'],
+        $_POST['phone'],
+        $_POST['cpfCnpj'],
+        $_POST['crea'] ?? null,
+        $_POST['adress'] ?? null
+    );
+
+    // Cria DAO 
+    $dao = new TechnicianDAO();
+    $insertSuccess = $dao->insert($technician);
+
+    // Verifica a inserção
+    if ($insertSuccess) {
+        echo "<p class='text-green-500'>Técnico inserido com sucesso!</p>";
+    } else {
+        echo "<p class='text-red-500'>Erro ao inserir o técnico.</p>";
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,33 +42,33 @@ $technician = new Technician(
 <body class="bg-blue-50 min-h-screen flex flex-col">
 
   <!-- Navbar -->
-  <?php include 'navbar.php'; ?>
+  <?php include 'views/shared/navbar.php'; ?>
 
   <!-- Main content -->
   <main class="flex-1 flex items-center justify-center p-8">
     <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
       <h1 class="text-3xl font-bold text-blue-700 mb-6 text-center">My Profile</h1>
       
-      <form action="update_profile.php" method="POST" enctype="multipart/form-data" class="space-y-5">
+      <form action="" method="POST" class="space-y-5">
         <div>
           <label for="name" class="block text-blue-700 font-semibold">Full Name</label>
           <input 
             type="text" 
             id="name" 
             name="name" 
-            value="<?php echo htmlspecialchars($technician->getName()); ?>" 
+            value="<?php echo isset($technician) ? htmlspecialchars($technician->getName()) : '' ?>" 
             required 
             class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+          />
         </div>
-        
+
         <div>
           <label for="email" class="block text-blue-700 font-semibold">Email</label>
           <input 
             type="email" 
             id="email" 
             name="email" 
-            value="john.doe@example.com" 
+            value="<?php echo isset($technician) ? htmlspecialchars($technician->getEmail()) : '' ?>" 
             required 
             class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
@@ -60,30 +80,41 @@ $technician = new Technician(
             type="text" 
             id="phone" 
             name="phone" 
-            value="<?php echo htmlspecialchars($technician->getPhone()); ?>" 
+            value="<?php echo isset($technician) ? htmlspecialchars($technician->getPhone()) : '' ?>" 
             class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
         </div>
 
         <div>
-          <label for="license" class="block text-blue-700 font-semibold">License Number</label>
+          <label for="cpfCnpj" class="block text-blue-700 font-semibold">CPF ou CNPJ</label>
           <input 
             type="text" 
-            id="license" 
-            name="license" 
-            value="<?php echo htmlspecialchars($technician->getCrea()); ?>" 
+            id="cpfCnpj" 
+            name="cpfCnpj" 
+            value="<?php echo isset($technician) ? htmlspecialchars($technician->getCpfCnpj()) : '' ?>" 
             class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
         </div>
 
         <div>
-          <label for="logo" class="block text-blue-700 font-semibold">Upload Logo/Profile Picture</label>
+          <label for="crea" class="block text-blue-700 font-semibold">CREA Register</label>
           <input 
-            type="file" 
-            id="logo" 
-            name="logo"
-            accept="image/*"
-            class="w-full mt-2"
+            type="text" 
+            id="crea" 
+            name="crea" 
+            value="<?php echo isset($technician) ? htmlspecialchars($technician->getCrea()) : '' ?>" 
+            class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+        </div>
+
+        <div>
+          <label for="adress" class="block text-blue-700 font-semibold">Address</label>
+          <input 
+            type="text" 
+            id="adress" 
+            name="adress" 
+            value="<?php echo isset($technician) ? htmlspecialchars($technician->getAddress()) : '' ?>" 
+            class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
         </div>
 
@@ -98,9 +129,7 @@ $technician = new Technician(
   </main>
 
   <!-- Footer -->
-  <footer class="bg-white p-4 text-center shadow-md">
-    <p class="text-sm text-blue-700">&copy; 2025 AC Technician Platform. All rights reserved.</p>
-  </footer>
+<?php include 'views/shared/footer.php'; ?>
 
 </body>
 </html>

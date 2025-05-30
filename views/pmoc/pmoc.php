@@ -9,7 +9,7 @@
 
 <body class="bg-blue-50 min-h-screen flex flex-col">
 
-  <?php include '/home/secret/Desktop/airconditioner/views/pmoc/pmoc.php'; ?>
+  <?php include __DIR__ . '/../shared/navbar.php'; ?>
 
   <?php
     // Simulando PMOCs cadastrados
@@ -49,9 +49,8 @@
     </div>
   </main>
 
-  <footer class="bg-white p-4 text-center shadow-md">
-    <p class="text-sm text-blue-700">&copy; 2025 AC Technician Platform. All rights reserved.</p>
-  </footer>
+  <?php include __DIR__ . '/../shared/footer.php'; ?>
+
 
 </body>
 </html>
