@@ -66,7 +66,7 @@ $budgets = $_SESSION['budgets'];
 </head>
 <body class="bg-blue-50 min-h-screen flex flex-col">
 
-  <?php include 'navbar.php'; ?>
+  <?php include __DIR__ . '/../shared/navbar.php'; ?>
 
   <main class="flex-1 p-8">
     <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-4xl mx-auto">
@@ -128,9 +128,9 @@ $budgets = $_SESSION['budgets'];
     </div>
   </main>
 
-  <footer class="bg-white p-4 text-center shadow-md">
-    <p class="text-sm text-blue-700">&copy; 2025 AC Technician Platform. All rights reserved.</p>
-  </footer>
+<?php include __DIR__ . '/../shared/footer.php'; ?>
+
 
 </body>
+
 </html>

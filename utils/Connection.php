@@ -1,30 +1,30 @@
 <?php
 
-class Conexao {
+class Connection {
     private static $host = 'localhost';
     private static $dbName = 'airconditioner';
     private static $username = 'root';
-    private static $password = 'bancodedados';
-    private static $conn = null;
+    private static $password = '101212';
+    private static $connection = null;
 
     /**
-     * Método estático para obter a conexão PDO.
+     * Static method to get the PDO connection.
      *
      * @return PDO
      */
     public static function getConnection() {
-        if (self::$conn === null) {
+        if (self::$connection === null) {
             try {
-                self::$conn = new PDO(
+                self::$connection = new PDO(
                     'mysql:host=' . self::$host . ';dbname=' . self::$dbName,
                     self::$username,
                     self::$password
                 );
-                self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
-                die('Erro na conexão: ' . $e->getMessage());
+                die('Connection error: ' . $e->getMessage());
             }
         }
-        return self::$conn;
+        return self::$connection;
     }
 }
