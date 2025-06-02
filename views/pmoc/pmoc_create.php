@@ -1,18 +1,4 @@
-<?php 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
-require_once __DIR__ . '/../../controllers/pmoc/PmocController.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        $controller = new PmocController();
-        $controller->createPmoc($_POST);
-    } catch (Exception $e) {
-        $error = $e->getMessage();
-    }
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-3xl mx-auto space-y-8">
             <h1 class="text-4xl font-extrabold text-blue-800 text-center">Criar PMOC</h1>
 
-            <form action="pmoc_create.php" method="POST" class="space-y-6">
+            <form action="?route=pmoc_store" method="POST" class="space-y-6">
                 <!-- Nome do PMOC -->
                 <div>
                     <label for="name" class="block text-sm font-semibold text-gray-700">Nome do PMOC</label>
