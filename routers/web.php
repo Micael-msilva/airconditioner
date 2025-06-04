@@ -7,6 +7,7 @@ $routes = [
     'pmoc' => ['PmocController', 'index'],            // lista PMOCs
     'pmoc_create' => ['PmocController', 'createPmoc'],    // formulário (GET)
     'pmoc_store' => ['PmocController', 'storePmoc'], // salvar (POST)
+    'pmoc_detail' => ['PmocController', 'pmocDetails'],  // detalhes de um PMOC
 
     // Client
     'client_create' => ['ClientController', 'create'],

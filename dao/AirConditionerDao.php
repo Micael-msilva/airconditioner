@@ -46,6 +46,29 @@ class AirConditionerDao {
         return null;
     }
 
+    public static function getAllAirConditionerByPmocId(int $id): array {
+        $conn = Connection::getConnection();
+        $stmt = $conn->prepare("SELECT * FROM air_conditioner WHERE id_pmoc = ?");
+        $stmt->execute([$id]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $airConditioners = [];
+
+        foreach ($rows as $row) {
+            $airConditioners[] = new AirConditioner(
+                $row['id'],
+                $row['brand'],
+                $row['btus'],
+                $row['description'],
+                $row['location'],
+                $row['id_pmoc']
+            );
+        }
+
+        return $airConditioners;
+    }
+
+
     public static function getAllAirConditioners(): array {
         $conn = Connection::getConnection();
         $stmt = $conn->query("SELECT * FROM air_conditioner");

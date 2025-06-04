@@ -34,7 +34,7 @@
                 </h2>
                 <p class="text-blue-500">Criado em: <?= htmlspecialchars($pmoc->getCreation_date()); ?></p>
               </div>
-              <a href="?route=pmoc_detail&id=<?= urlencode($pmoc->getId()); ?>" class="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition">
+              <a href="?route=pmoc_detail&id_pmoc=<?= urlencode($pmoc->getId()); ?>" class="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition">
                 Detalhes
               </a>
             </div>

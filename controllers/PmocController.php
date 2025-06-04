@@ -61,5 +61,20 @@ class PmocController {
         header('Location: ?route=pmoc');  // redireciona para a lista
         exit;
     }
+
+    public function pmocDetails() {
+        if (!isset($_GET['id_pmoc'])) {
+            throw new Exception("ID do PMOC não informado.");
+        }
+        $pmocId = (int) $_GET['id_pmoc'];
+        
+        $pmoc = PmocDao::getPmocById($pmocId);
+        if (!$pmoc) {
+            throw new Exception("PMOC não encontrado.");
+        }
+        
+        $airConditioners = AirConditionerDao::getAllAirConditionerByPmocId($pmocId);
+        include __DIR__ . '/../views/pmoc/pmoc_detail.php';
+    }
 }
 
