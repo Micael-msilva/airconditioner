@@ -37,7 +37,7 @@ class ClientDao {
      */
     public static function getClientById(int $id): ?Client {
         $conn = Connection::getConnection();
-        $stmt = $conn->prepare("SELECT * FROM clients WHERE id = ?");
+        $stmt = $conn->prepare("SELECT * FROM client WHERE id = ?");
         $stmt->execute([$id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -59,7 +59,7 @@ class ClientDao {
      */
     public static function getAllClients(): array {
         $conn = Connection::getConnection();
-        $stmt = $conn->query("SELECT * FROM clients");
+        $stmt = $conn->query("SELECT * FROM client");
         $clients = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -73,4 +73,22 @@ class ClientDao {
         return $clients;
     }
 
+    public static function updateClient(Client $client): bool {
+        $conn = Connection::getConnection();
+        $stmt = $conn->prepare(
+            "UPDATE client SET name = ?, phone = ? WHERE id = ?"
+        );
+
+        return $stmt->execute([
+            $client->getName(),
+            $client->getPhone(),
+            $client->getId()
+        ]);
+    }
+
+    public static function deleteClient(int $id): bool {
+        $conn = Connection::getConnection();
+        $stmt = $conn->prepare("DELETE FROM client WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
 }

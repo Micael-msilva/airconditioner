@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../utils/Connection.php';
 require_once __DIR__ . '/../model/Pmoc.php';
+require_once __DIR__ . '/../dao/AirConditionerDao.php';
+require_once __DIR__ . '/../dao/ClientDao.php';
 
 class PmocDao {
 
@@ -66,6 +68,16 @@ class PmocDao {
         }
         
         return $pmocs;
+    }
+
+    public static function deletePmoc(int $id): bool {
+        $conn = Connection::getConnection();
+        $stmt = $conn->prepare("DELETE FROM pmoc WHERE id = ?");
+        // Primeiro, deletar os ar-condicionados associados
+        AirConditionerDao::deleteAirConditionersByPmocId($id);
+        // Depois, deletar o PMOC
+        
+        return $stmt->execute([$id]);;
     }
 
 }

@@ -87,4 +87,24 @@ class AirConditionerDao {
         
         return $airConditioners;
     }
+
+    public static function deleteAirConditioner(int $id): bool {
+        $conn = Connection::getConnection();
+        $stmt = $conn->prepare("DELETE FROM air_conditioner WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
+
+    public static function updateAirConditioner(AirConditioner $airConditioner): bool {
+        $conn = Connection::getConnection();
+        $stmt = $conn->prepare(
+            "UPDATE air_conditioner SET brand = ?, btus = ?, description = ?, location = ? WHERE id = ?"
+        );
+        return $stmt->execute([
+            $airConditioner->getBrand(),
+            $airConditioner->getBtus(),
+            $airConditioner->getDescription(),
+            $airConditioner->getLocation(),
+            $airConditioner->getId()
+        ]);
+    }
 }

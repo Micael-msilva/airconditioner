@@ -67,13 +67,17 @@ class PmocController {
             throw new Exception("ID do PMOC não informado.");
         }
         $pmocId = (int) $_GET['id_pmoc'];
-        
         $pmoc = PmocDao::getPmocById($pmocId);
+
+        $clientId = $pmoc->getId_client();
+        $client = ClientDao::getClientById($clientId);
+        
         if (!$pmoc) {
             throw new Exception("PMOC não encontrado.");
         }
         
         $airConditioners = AirConditionerDao::getAllAirConditionerByPmocId($pmocId);
+        
         include __DIR__ . '/../views/pmoc/pmoc_detail.php';
     }
 }

@@ -51,5 +51,44 @@ class TechnicianDAO {
         
     }
 
-    
+    public static function getAllTechnicians(): array {
+        $conn = Connection::getConnection();
+        $stmt = $conn->query("SELECT * FROM technician");
+        $technicians = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $technicians[] = new Technician(
+                $row['cpf_cnpj'],
+                $row['name'],
+                $row['address'],
+                $row['phone'],
+                $row['crea'],
+                $row['email']
+            );
+        }
+
+        return $technicians;
+    }
+
+    public static function updateTechnician(Technician $technician): bool {
+        $conn = Connection::getConnection();
+        $stmt = $conn->prepare(
+            "UPDATE technician SET name = ?, address = ?, phone = ?, crea = ?, email = ? WHERE cpf_cnpj = ?"
+        );
+        
+        return $stmt->execute([
+            $technician->getName(),
+            $technician->getAddress(),
+            $technician->getPhone(),
+            $technician->getCrea(),
+            $technician->getEmail(),
+            $technician->getCpf_cnpj()
+        ]);
+    }
+
+    public static function deleteTechnician(int $cpf_cnpj): bool {
+        $conn = Connection::getConnection();
+        $stmt = $conn->prepare("DELETE FROM technician WHERE cpf_cnpj = ?");
+        return $stmt->execute([$cpf_cnpj]);
+    }
 }
