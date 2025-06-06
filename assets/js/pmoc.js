@@ -61,9 +61,9 @@ function togglePmocEdit() {
     document.getElementById('pmocEditForm').classList.toggle('hidden');
 }
 
-function deleteAirConditioner(id) {
+function deleteAirConditioner(id_pmoc, id_airconditioner) {
     if (confirm('Tem certeza que deseja excluir este aparelho?')) {
-    window.location.href = '?route=airconditioner_delete&id_airconditioner=' + id;
+    window.location.href = '?route=airconditioner_delete&id_pmoc=' + id_pmoc + '&id_airconditioner=' + id_airconditioner;
     }
 }
 
@@ -71,6 +71,11 @@ function deletePmoc(id) {
     if (confirm('Tem certeza que deseja excluir este PMOC?')) {
     window.location.href = '?route=pmoc_delete&id_pmoc=' + id;
     }
+}
+
+function toggleAddForm() {
+    const form = document.getElementById('addAirConditionerForm');
+    form.classList.toggle('hidden');
 }
 
 tailwind.config = {

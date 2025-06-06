@@ -43,9 +43,9 @@ class ClientDao {
 
         if ($row) {
             return new Client(
-                $row['id'],
                 $row['name'],
-                $row['phone']
+                $row['phone'],
+                $row['id']
             );
         }
 

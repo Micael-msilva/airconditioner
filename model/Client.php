@@ -2,9 +2,10 @@
 
 class Client {
 
-    private $id;
     private $name;
     private $phone;
+    private $id;
+
 
 
     /**
@@ -15,9 +16,10 @@ class Client {
      * @param string $phone
      */
     public function __construct($name, $phone, $id = null) {
-        $this->setId($id);
         $this->setName($name);
         $this->setPhone($phone);
+        $this->setId($id);
+
     }
 
 
@@ -47,5 +49,8 @@ class Client {
         $this->phone = $phone;
     }
 
+    public function __toString() {
+        return "Client [id={$this->id}, name={$this->name}, phone={$this->phone}]";
+    }
 }
 ?>

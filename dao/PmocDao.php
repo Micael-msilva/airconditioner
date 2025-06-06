@@ -80,4 +80,29 @@ class PmocDao {
         return $stmt->execute([$id]);;
     }
 
+    public static function updatePmoc(Pmoc $pmoc): bool {
+        $conn = Connection::getConnection();
+        $stmt = $conn->prepare(
+            "UPDATE pmoc SET name = ?, creation_date = ?, service_address = ?, id_technician = ?, id_client = ? WHERE id = ?"
+        );
+        return $stmt->execute([
+            $pmoc->getName(),
+            $pmoc->getCreation_date(),
+            $pmoc->getService_address(),
+            $pmoc->getId_technician(),
+            $pmoc->getId_client(),
+            $pmoc->getId()
+        ]);
+    }
+
+    public static function getClientIdByPmocId(int $pmocId): ?int {
+        $conn = Connection::getConnection();
+        $stmt = $conn->prepare("SELECT id_client FROM pmoc WHERE id = ?");
+        $stmt->execute([$pmocId]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $row ? (int)$row['id_client'] : null;
+    }
+
+    
 }

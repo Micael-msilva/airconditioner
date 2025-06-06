@@ -8,14 +8,17 @@ $routes = [
     'pmoc_create' => ['PmocController', 'createPmoc'],    // formulário (GET)
     'pmoc_store' => ['PmocController', 'storePmoc'], // salvar (POST)
     'pmoc_detail' => ['PmocController', 'pmocDetails'],  // detalhes de um PMOC
+    'pmoc_update' => ['PmocController', 'updatePmocDetails'], // atualizar PMOC e Cliente
+    'pmoc_delete' => ['PmocController', 'deletePmoc'], // excluir PMOC
 
     // Client
     'client_create' => ['ClientController', 'create'],
     'client_store' => ['ClientController', 'store'],
 
     // AirConditioner
-    'airconditioner_create' => ['AirConditionerController', 'create'],
-    'airconditioner_store' => ['AirConditionerController', 'store'],
+    'airconditioner_create' => ['PmocController', 'createAirconditioner'], // formulário (POST)
+    'airconditioner_update' => ['PmocController', 'updateAirconditionerDetails'],
+    'airconditioner_delete' => ['PmocController', 'deleteAirconditioner'],
 
     // Authentication
     'login' => ['AuthController', 'login'],

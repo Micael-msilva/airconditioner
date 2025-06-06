@@ -20,13 +20,14 @@ class AirConditioner {
      * @param string $location
      * @param int $id_pmoc
      */
-    public function __construct($id, $brand, $btus, $description, $location, $id_pmoc) {
-        $this->setId($id);
+    public function __construct( $brand, $btus, $description, $location, $id_pmoc,$id=null) {
         $this->setBrand($brand);
         $this->setBtus($btus);
         $this->setDescription($description);
         $this->setLocation($location);
         $this->setId_pmoc($id_pmoc);
+        $this->setId($id);
+
     }
 
 

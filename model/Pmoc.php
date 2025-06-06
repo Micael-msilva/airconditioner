@@ -81,5 +81,9 @@ class Pmoc {
         $this->id_client = $id_client;
     }
 
+    public function __toString() {
+        return "PMOC [ID: {$this->id}, Name: {$this->name}, Creation Date: {$this->creation_date}, Service Address: {$this->service_address}, Technician ID: {$this->id_technician}, Client ID: {$this->id_client}]";
+    }
+
 }
 ?>
