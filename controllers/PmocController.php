@@ -25,13 +25,18 @@ class PmocController {
 
     // Recebe o POST do formulário, cria PMOC e redireciona
     public function storePmoc(array $postData){
+        error_log("==== INICIO storePmoc ====");
+        error_log("POST DATA: " . print_r($postData, true));      
+
         if (empty($postData['name']) || empty($postData['client_name'])) {
+            error_log("FALTOU nome do PMOC ou do Cliente");
             throw new Exception("Nome do PMOC e do Cliente são obrigatórios.");
         }
 
         // Criar cliente
         $client = new Client($postData['client_name'], $postData['client_phone'], null);
         $clientId = ClientDao::addClient($client);
+        error_log("CLIENTE criado com ID: $clientId");
 
         // Criar PMOC
         $pmoc = new Pmoc(
@@ -41,28 +46,36 @@ class PmocController {
             1,
             $clientId,
             null,
-
         );
         $pmocId = PmocDao::addPmoc($pmoc);
+        error_log("PMOC criado com ID: $pmocId");
 
         // Criar ar-condicionados
         if (!empty($postData['airconditioners']) && is_array($postData['airconditioners'])) {
-            foreach ($postData['airconditioners'] as $acData) {
-                // Validação dos campos obrigatórios
-                if (!empty($acData['model']) && !empty($acData['btus']) && !empty($acData['description']) && !empty($acData['location'])) {
+            error_log("AIRCONDITIONERS recebidos: " . print_r($postData['airconditioners'], true));
+            foreach ($postData['airconditioners'] as $idx => $acData) {
+                error_log("Processando AC #$idx: " . print_r($acData, true));
+                // Validação simplificada - apenas verificando 'brand'
+                if (!empty($acData['brand']) && !empty($acData['btus']) && !empty($acData['description']) && !empty($acData['location'])) {
                     $airConditioner = new AirConditioner(
-                        $acData['model'],
+                        $acData['brand'],
                         $acData['btus'],
                         $acData['description'],
                         $acData['location'],
                         $pmocId,
                         null
                     );
+                    error_log("Adicionando AC: " . print_r($airConditioner, true));
                     AirConditionerDao::addAirConditioner($airConditioner);
+                } else {
+                    error_log("AC #$idx ignorado por falta de dados obrigatórios: " . print_r($acData, true));
                 }
             }
+        } else {
+            error_log("Nenhum ar-condicionado recebido ou formato incorreto.");
         }
 
+        error_log("==== FIM storePmoc ====");
         header('Location: ?route=pmoc');  // redireciona para a lista
         exit;
     }
@@ -132,22 +145,22 @@ class PmocController {
     }
 
     public function updateAirconditionerDetails(array $postData) {
-        if (empty($postData['model']) || empty($postData['btus']) || empty($postData['description']) || empty($postData['location'])) {
+        if (empty($postData['brand']) || empty($postData['btus']) || empty($postData['description']) || empty($postData['location'])) {
             throw new Exception("Todos os campos do ar-condicionado são obrigatórios.");
         }
 
         $airConditioner = new AirConditioner(
-            $postData['id_airconditioner'],
-            $postData['model'],
+            $postData['brand'],
             $postData['btus'],
             $postData['description'],
             $postData['location'],
-            $postData['id_pmoc']
+            $postData['id_pmoc'],
+            $postData['id_airconditioner']
         );
 
         AirConditionerDao::updateAirConditioner($airConditioner);
 
-        header('Location: ?route=pmoc_detail&id_pmoc=' . $airConditioner->getId_pmoc());  // redireciona para os detalhes do PMOC
+        header('Location: ?route=pmoc_detail&id_pmoc=' . $airConditioner->getId_pmoc());
         exit;
     }
 

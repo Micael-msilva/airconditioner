@@ -1,30 +1,32 @@
 function addAirConditionerField() {
     const container = document.getElementById('airconditioner-fields');
+    const index = container.children.length; // pega o próximo índice
 
     const card = document.createElement('div');
     card.className = 'p-4 bg-gray-100 rounded-xl shadow-inner space-y-2';
 
-    const modelo = document.createElement('input');
-    modelo.type = 'text';
-    modelo.name = 'airconditioners[]';
-    modelo.placeholder = 'Modelo';
-    modelo.className = 'block w-full rounded-md border-gray-300 shadow focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50';
+    // Usamos apenas brand (removido o campo modelo)
+    const brand = document.createElement('input');
+    brand.type = 'text';
+    brand.name = `airconditioners[${index}][brand]`;
+    brand.placeholder = 'Marca/Modelo';
+    brand.className = 'block w-full rounded-md border-gray-300 shadow focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50';
 
     const btus = document.createElement('input');
     btus.type = 'number';
-    btus.name = 'airconditioners[]';
+    btus.name = `airconditioners[${index}][btus]`;
     btus.placeholder = 'BTUs';
     btus.className = 'block w-full rounded-md border-gray-300 shadow focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50';
 
     const descricao = document.createElement('textarea');
-    descricao.name = 'airconditioners[]';
+    descricao.name = `airconditioners[${index}][description]`;
     descricao.placeholder = 'Descrição';
     descricao.rows = 3;
     descricao.className = 'block w-full rounded-md border-gray-300 shadow focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50 resize-y';
 
     const localizacao = document.createElement('input');
     localizacao.type = 'text';
-    localizacao.name = 'airconditioners[]';
+    localizacao.name = `airconditioners[${index}][location]`;
     localizacao.placeholder = 'Localização';
     localizacao.className = 'block w-full rounded-md border-gray-300 shadow focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50';
 
@@ -34,7 +36,8 @@ function addAirConditionerField() {
     btn.className = 'bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-lg transition';
     btn.onclick = function() { removeField(btn); };
 
-    card.appendChild(modelo);
+    // Adiciona apenas os campos necessários
+    card.appendChild(brand);
     card.appendChild(btus);
     card.appendChild(descricao);
     card.appendChild(localizacao);
@@ -48,6 +51,7 @@ function removeField(button) {
     button.parentElement.remove();
 }
 
+// Resto das funções permanece igual
 function toggleDetails(id) {
     const elem = document.getElementById('details-' + id);
     elem.classList.toggle('hidden');
@@ -82,10 +86,10 @@ tailwind.config = {
     theme: {
     extend: {
         colors: {
-        primary: '#2563EB', // azul
-        secondary: '#1E40AF', // azul mais escuro
-        accent: '#FBBF24', // amarelo
-        danger: '#DC2626', // vermelho
+        primary: '#2563EB',
+        secondary: '#1E40AF',
+        accent: '#FBBF24',
+        danger: '#DC2626',
         }
     }
     }

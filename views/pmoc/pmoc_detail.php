@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -165,6 +163,7 @@
                 </div>
                 <form id="editForm-<?= $airConditioner->getId(); ?>" action="?route=airconditioner_update" method="POST" class="mt-4 space-y-3 hidden bg-blue-50 p-4 rounded-xl shadow-inner">
                   <input type="hidden" name="id_airconditioner" value="<?= $airConditioner->getId(); ?>">
+                  <input type="hidden" name="id_pmoc" value="<?= $_GET['id_pmoc']; ?>">
                   <input type="text" name="brand" value="<?= htmlspecialchars($airConditioner->getBrand()); ?>" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary">
                   <input type="number" name="btus" value="<?= htmlspecialchars($airConditioner->getBtus()); ?>" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary">
                   <textarea name="description" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary"><?= htmlspecialchars($airConditioner->getDescription()); ?></textarea>
