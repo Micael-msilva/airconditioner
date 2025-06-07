@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,16 +49,16 @@
                 <!-- Ar Condicionados -->
                 <div id="airconditioner-fields" class="space-y-4 mt-6">
                     <div class="p-6 bg-gray-50 border border-gray-200 rounded-2xl shadow-sm space-y-3">
-                        <input type="text" name="airconditioners[]" placeholder="Modelo"
+                        <input type="text" name="airconditioners[][model]" placeholder="Modelo"
                             class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50 px-4 py-2">
 
-                        <input type="number" name="airconditioners[]" placeholder="BTUs"
+                        <input type="number" name="airconditioners[][btus]" placeholder="BTUs"
                             class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50 px-4 py-2">
 
-                        <textarea name="airconditioners[]" placeholder="Descrição" rows="3"
+                        <textarea name="airconditioners[][description]" placeholder="Descrição" rows="3"
                             class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50 resize-y px-4 py-2"></textarea>
 
-                        <input type="text" name="airconditioners[]" placeholder="Localização"
+                        <input type="text" name="airconditioners[][location]" placeholder="Localização"
                             class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50 px-4 py-2">
 
                         <button type="button" onclick="removeField(this)" 
@@ -77,7 +75,7 @@
 
                 <!-- Botões -->
                 <div class="flex justify-end space-x-4 pt-6">
-                    <a href="pmoc.php" class="inline-block bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold px-6 py-2 rounded-2xl transition shadow">
+                    <a href="?route=pmoc" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-2 rounded-2xl transition shadow">
                         Cancelar
                     </a>
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-2xl transition shadow">

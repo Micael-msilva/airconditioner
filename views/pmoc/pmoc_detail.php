@@ -75,6 +75,7 @@
           </div>
 
           <h3 class="text-xl font-bold text-primary mt-6">Editar Cliente</h3>
+          <input type="hidden" name="id_client" value="<?= $client->getId(); ?>">
 
           <div>
             <label class="block text-sm font-medium text-gray-600 mb-1">Nome do Cliente</label>

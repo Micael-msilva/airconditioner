@@ -6,13 +6,17 @@ require_once __DIR__ . '/../model/Technician.php';
 class TechnicianDAO {
 
     /**
-     * @param Technician
-     * @return bool 
+     * Adiciona um novo técnico no banco de dados.
+     *
+     * @param Technician $technician
+     * @return bool
      */
-
     public static function addTechnician(Technician $technician): bool {
         $conn = Connection::getConnection();
-        $stmt = $conn->prepare("INSERT INTO technician (cpf_cnpj, name, address, phone, crea, email) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare(
+            "INSERT INTO technician (cpf_cnpj, name, address, phone, crea, email) 
+             VALUES (?, ?, ?, ?, ?, ?)"
+        );
         
         return $stmt->execute([
             $technician->getCpf_cnpj(), 
@@ -25,13 +29,15 @@ class TechnicianDAO {
     }
 
     /**
-     * @param int $cpf_cnpj
+     * Busca um técnico pelo id.
+     *
+     * @param int $id
      * @return Technician|null
      */
-    public static function getTechnicianById(int $cpf_cnpj): ?Technician {
+    public static function getTechnicianById(int $id): ?Technician {
         $conn = Connection::getConnection();
-        $stmt = $conn->prepare("SELECT * FROM technician WHERE cpf_cnpj = ?");
-        $stmt->execute([$cpf_cnpj]);
+        $stmt = $conn->prepare("SELECT * FROM technician WHERE id = ?");
+        $stmt->execute([$id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row) {
@@ -41,16 +47,18 @@ class TechnicianDAO {
                 $row['address'],
                 $row['phone'],
                 $row['crea'],
-                $row['email']
+                $row['email'],
+                $id 
             );
         }
         return null;
     }
 
-    public static function getId(){
-        
-    }
-
+    /**
+     * Retorna um array com todos os técnicos.
+     *
+     * @return Technician[]
+     */
     public static function getAllTechnicians(): array {
         $conn = Connection::getConnection();
         $stmt = $conn->query("SELECT * FROM technician");
@@ -63,32 +71,46 @@ class TechnicianDAO {
                 $row['address'],
                 $row['phone'],
                 $row['crea'],
-                $row['email']
+                $row['email'],
+                $row['id']
             );
         }
 
         return $technicians;
     }
 
+    /**
+     * Atualiza os dados de um técnico, identificando-o pelo novo id.
+     *
+     * @param Technician $technician
+     * @return bool
+     */
     public static function updateTechnician(Technician $technician): bool {
         $conn = Connection::getConnection();
         $stmt = $conn->prepare(
-            "UPDATE technician SET name = ?, address = ?, phone = ?, crea = ?, email = ? WHERE cpf_cnpj = ?"
+            "UPDATE technician SET cpf_cnpj = ?, name = ?, address = ?, phone = ?, crea = ?, email = ? WHERE id = ?"
         );
-        
+
         return $stmt->execute([
+            $technician->getCpf_cnpj(),
             $technician->getName(),
             $technician->getAddress(),
             $technician->getPhone(),
             $technician->getCrea(),
             $technician->getEmail(),
-            $technician->getCpf_cnpj()
+            $technician->getId()
         ]);
     }
 
-    public static function deleteTechnician(int $cpf_cnpj): bool {
+    /**
+     * Exclui um técnico pelo id.
+     *
+     * @param int $id
+     * @return bool
+     */
+    public static function deleteTechnician(int $id): bool {
         $conn = Connection::getConnection();
-        $stmt = $conn->prepare("DELETE FROM technician WHERE cpf_cnpj = ?");
-        return $stmt->execute([$cpf_cnpj]);
+        $stmt = $conn->prepare("DELETE FROM technician WHERE id = ?");
+        return $stmt->execute([$id]);
     }
 }

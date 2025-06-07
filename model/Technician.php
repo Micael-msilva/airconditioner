@@ -20,13 +20,14 @@ class Technician {
      * @param string $crea
      * @param string $email
      */
-    public function __construct($cpf_cnpj, $name, $address, $phone, $crea, $email) {
+    public function __construct($cpf_cnpj, $name, $address, $phone, $crea, $email, $id=null) {
         $this->setCpf_cnpj($cpf_cnpj);
         $this->setName($name);
         $this->setAddress($address);
         $this->setPhone($phone);
         $this->setCrea($crea);
         $this->setEmail($email);
+        $this->setId($id);
     }
 
 
@@ -55,6 +56,9 @@ class Technician {
         return $this->email;
     }
 
+    public function getId() {
+        return $this->id;
+    }
 
 
     public function setCpf_cnpj($cpf_cnpj) {
@@ -81,5 +85,8 @@ class Technician {
         $this->email = $email;
     }
 
+    public function setId($id) {
+        $this->id = $id;
+    }
 }
 ?>

@@ -2,7 +2,8 @@ CREATE DATABASE IF NOT EXISTS airconditioner;
 USE airconditioner;
 
 CREATE TABLE IF NOT EXISTS technician (
-    cpf_cnpj VARCHAR(20) PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cpf_cnpj VARCHAR(20) NOT NULL UNIQUE,
     name VARCHAR(100) NOT NULL,
     address VARCHAR(200),
     phone VARCHAR(20),
@@ -22,9 +23,9 @@ CREATE TABLE IF NOT EXISTS pmoc (
     name VARCHAR(100) NOT NULL,
     creation_date DATE,
     service_address VARCHAR(255),
-    id_technician VARCHAR(20) NOT NULL,
+    id_technician INT NOT NULL,
     id_client INT NOT NULL,
-    FOREIGN KEY (id_technician) REFERENCES technician(cpf_cnpj) ON DELETE CASCADE,
+    FOREIGN KEY (id_technician) REFERENCES technician(id) ON DELETE CASCADE,
     FOREIGN KEY (id_client) REFERENCES client(id) ON DELETE CASCADE
 );
 

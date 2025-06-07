@@ -64,9 +64,10 @@ class ClientDao {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $clients[] = new Client(
-                $row['id'],
                 $row['name'],
-                $row['phone']
+                $row['phone'],
+                $row['id'],
+
             );
         }
 

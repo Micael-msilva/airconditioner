@@ -12,8 +12,8 @@ class ProfileController {
     private $message;
 
     public function __construct() {
-        // Carrega os dados do técnico, idealmente pegue do usuário logado, aqui fixo só para exemplo
-        $this->technician = TechnicianDao::getTechnicianById('80204294924');
+        // Utiliza o id fixo do técnico (1) até que o login esteja implementado
+        $this->technician = TechnicianDao::getTechnicianById(1);
     }
 
     public function handleRequest(array $postData = null) {
@@ -27,16 +27,44 @@ class ProfileController {
         include __DIR__ . '/../views/profile.php';
     }
 
-    private function updateTechnician(array $data) {
+    private function addTechnician(array $data) {
         if (!empty($data['name'])) {
-            // Cria um objeto Technician com os dados atualizados
+            // Cria um objeto Technician com os dados fornecidos, incluindo o id fixo (1)
             $technician = new Technician(
                 $data['cpfCnpj'] ?? null,
                 $data['name'],
                 $data['adress'] ?? null,
                 $data['phone'] ?? null,
                 $data['crea'] ?? null,
-                $data['email'] ?? null
+                $data['email'] ?? null,
+                1  // id fixo do técnico
+            );
+
+            // Chama o método para adicionar o técnico
+            $success = TechnicianDao::addTechnician($technician);
+
+            if ($success) {
+                $this->technician = $technician; // Atualiza para refletir na view
+                $this->message = ['text' => 'Perfil adicionado com sucesso!', 'type' => 'success'];
+            } else {
+                $this->message = ['text' => 'Erro ao adicionar o perfil.', 'type' => 'error'];
+            }
+        } else {
+            $this->message = ['text' => 'O campo nome é obrigatório.', 'type' => 'error'];
+        }
+    }
+
+    private function updateTechnician(array $data) {
+        if (!empty($data['name'])) {
+            // Cria um objeto Technician com os dados atualizados, incluindo o id fixo (1)
+            $technician = new Technician(
+                $data['cpfCnpj'] ?? null,
+                $data['name'],
+                $data['adress'] ?? null,
+                $data['phone'] ?? null,
+                $data['crea'] ?? null,
+                $data['email'] ?? null,
+                1  // id fixo do técnico
             );
 
             // Troque 'addTechnician' por um método adequado para update, se existir

@@ -35,12 +35,12 @@ class AirConditionerDao {
 
         if ($row) {
             return new AirConditioner(
-                $row['id'],
                 $row['brand'],
                 $row['btus'],
                 $row['description'],
                 $row['location'],
-                $row['id_pmoc']
+                $row['id_pmoc'],
+                $row['id']
             );
         }
         return null;
@@ -56,18 +56,17 @@ class AirConditionerDao {
 
         foreach ($rows as $row) {
             $airConditioners[] = new AirConditioner(
-                $row['id'],
                 $row['brand'],
                 $row['btus'],
                 $row['description'],
                 $row['location'],
-                $row['id_pmoc']
+                $row['id_pmoc'],
+                $row['id']
             );
         }
 
         return $airConditioners;
     }
-
 
     public static function getAllAirConditioners(): array {
         $conn = Connection::getConnection();
@@ -76,12 +75,12 @@ class AirConditionerDao {
         
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $airConditioners[] = new AirConditioner(
-                $row['id'],
                 $row['brand'],
                 $row['btus'],
                 $row['description'],
                 $row['location'],
-                $row['id_pmoc']
+                $row['id_pmoc'],
+                $row['id']
             );
         }
         
@@ -106,5 +105,31 @@ class AirConditionerDao {
             $airConditioner->getLocation(),
             $airConditioner->getId()
         ]);
+    }
+
+    public static function getAirConditionersByPmocId(int $id_pmoc): array {
+        $conn = Connection::getConnection();
+        $stmt = $conn->prepare("SELECT * FROM air_conditioner WHERE id_pmoc = ?");
+        $stmt->execute([$id_pmoc]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $airConditioners = [];
+        foreach ($rows as $row) {
+            $airConditioners[] = new AirConditioner(
+                $row['brand'],
+                $row['btus'],
+                $row['description'],
+                $row['location'],
+                $row['id_pmoc'],
+                $row['id']
+            );
+        }
+        return $airConditioners;
+    }
+
+    public static function deleteAirConditionersByPmocId(int $id_pmoc): bool {
+        $conn = Connection::getConnection();
+        $stmt = $conn->prepare("DELETE FROM air_conditioner WHERE id_pmoc = ?");
+        return $stmt->execute([$id_pmoc]);
     }
 }

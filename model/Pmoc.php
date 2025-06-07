@@ -20,13 +20,14 @@ class Pmoc {
      * @param string $id_technician
      * @param string $id_client
      */
-    public function __construct($id, $name, $creation_date, $service_address, $id_technician, $id_client) {
-        $this->setId($id);
+    public function __construct($name, $creation_date, $service_address, $id_technician, $id_client, $id = null) {
         $this->setName($name);
         $this->setCreation_date($creation_date);
         $this->setService_address($service_address);
         $this->setId_technician($id_technician);
         $this->setId_client($id_client);
+        $this->setId($id);
+
     }
 
 

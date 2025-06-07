@@ -26,7 +26,7 @@ $routes = [
     'signup' => ['AuthController', 'signup'],
 
     // Profile
-    'profile' => ['ProfileController', 'handleRequest'],
+    'profile' => ['ProfileController', 'addTechnician'],
     
     // Tasks
     'tasks' => ['TaskController', 'index'],

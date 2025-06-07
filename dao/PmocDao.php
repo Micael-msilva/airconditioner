@@ -9,24 +9,26 @@ class PmocDao {
 
     /**
      * @param Pmoc $pmoc
-     * @return bool 
+     * @return int|null  Retorna o ID do PMOC inserido ou null em caso de erro
      */
-    public static function addPmoc(Pmoc $pmoc): int {
+    public static function addPmoc(Pmoc $pmoc): ?int {
         $conn = Connection::getConnection();
         $stmt = $conn->prepare(
             "INSERT INTO pmoc (name, creation_date, service_address, id_technician, id_client) VALUES (?, ?, ?, ?, ?)"
         );
-        $stmt->execute([
+        // Execute the statement
+        $success = $stmt->execute([
             $pmoc->getName(),
             $pmoc->getCreation_date(),
             $pmoc->getService_address(),
             $pmoc->getId_technician(),
             $pmoc->getId_client()
         ]);
-
-        return $conn->lastInsertId();  // <- IMPORTANTE!
+        if ($success) {
+            return (int)$conn->lastInsertId();
+        }
+        return null;
     }
-
 
     /**
      * @param int $id
@@ -40,12 +42,12 @@ class PmocDao {
 
         if ($row) {
             return new Pmoc(
-                $row['id'],
                 $row['name'],
                 $row['creation_date'],
                 $row['service_address'],
                 $row['id_technician'],
-                $row['id_client']
+                $row['id_client'],
+                $row['id']
             );
         }
         return null;
@@ -58,12 +60,12 @@ class PmocDao {
         
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $pmocs[] = new Pmoc(
-                $row['id'],
                 $row['name'],
                 $row['creation_date'],
                 $row['service_address'],
                 $row['id_technician'],
-                $row['id_client']
+                $row['id_client'],
+                $row['id']
             );
         }
         
@@ -76,8 +78,7 @@ class PmocDao {
         // Primeiro, deletar os ar-condicionados associados
         AirConditionerDao::deleteAirConditionersByPmocId($id);
         // Depois, deletar o PMOC
-        
-        return $stmt->execute([$id]);;
+        return $stmt->execute([$id]);
     }
 
     public static function updatePmoc(Pmoc $pmoc): bool {
@@ -103,6 +104,5 @@ class PmocDao {
         
         return $row ? (int)$row['id_client'] : null;
     }
-
-    
 }
+?>

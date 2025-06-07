@@ -35,27 +35,28 @@ class PmocController {
 
         // Criar PMOC
         $pmoc = new Pmoc(
-            null,
             $postData['name'],
             $postData['creation_date'],
             $postData['service_address'] ?? '',
-            80204294924,  // pode melhorar isso depois
-            $clientId
+            1,
+            $clientId,
+            null,
+
         );
         $pmocId = PmocDao::addPmoc($pmoc);
 
         // Criar ar-condicionados
-        if (!empty($postData['airconditioners'])) {
-            foreach ($postData['airconditioners'] as $index => $value) {
-                // Cada 4 inputs correspondem a um Ar Condicionado
-                if ($index % 4 == 0) {
+        if (!empty($postData['airconditioners']) && is_array($postData['airconditioners'])) {
+            foreach ($postData['airconditioners'] as $acData) {
+                // Validação dos campos obrigatórios
+                if (!empty($acData['model']) && !empty($acData['btus']) && !empty($acData['description']) && !empty($acData['location'])) {
                     $airConditioner = new AirConditioner(
-                        null,
-                        $postData['airconditioners'][$index],       // modelo
-                        $postData['airconditioners'][$index + 1],   // btus
-                        $postData['airconditioners'][$index + 2],   // descrição
-                        $postData['airconditioners'][$index + 3],   // localização
-                        $pmocId
+                        $acData['model'],
+                        $acData['btus'],
+                        $acData['description'],
+                        $acData['location'],
+                        $pmocId,
+                        null
                     );
                     AirConditionerDao::addAirConditioner($airConditioner);
                 }
@@ -70,12 +71,15 @@ class PmocController {
         if (!isset($_GET['id_pmoc'])) {
             throw new Exception("ID do PMOC não informado.");
         }
+        //print_r($_GET);
         $pmocId = (int) $_GET['id_pmoc'];
         $pmoc = PmocDao::getPmocById($pmocId);
-
+        //print_r($pmoc);
+        //print($pmoc->getId_client());
         $clientId = $pmoc->getId_client();
         $client = ClientDao::getClientById($clientId);
-        
+        //print_r($client);
+
         if (!$pmoc) {
             throw new Exception("PMOC não encontrado.");
         }
@@ -105,21 +109,21 @@ class PmocController {
 
     public function updatePmocDetails(array $postData) {
         if (empty($postData['name']) || empty($postData['client_name'])) {
-            throw new Exception("Nome do PMOC e Nome do Cliente são obrigatórios.");
+            throw new Exception("Nome do PMOC e do Cliente são obrigatórios.");
         }
 
         // Atualizar cliente
-        $client = new Client($postData['client_name'], $postData['client_phone'], PmocDao::getClientIdByPmocId($postData['id_pmoc']));
+        $client = new Client($postData['client_name'], $postData['client_phone'], $postData['id_client']);
         ClientDao::updateClient($client);
 
         // Atualizar PMOC
         $pmoc = new Pmoc(
-            $postData['id_pmoc'],
             $postData['name'],
             $postData['creation_date'],
             $postData['service_address'] ?? '',
-            80204294924,  // pode melhorar isso depois
-            $client->getId()  // ID do cliente atualizado`
+            1,
+            $postData['id_client'],
+            $postData['id_pmoc']
         );
         PmocDao::updatePmoc($pmoc);
 
@@ -162,7 +166,7 @@ class PmocController {
     }
 
     public function createAirconditioner(array $postData) {
-        print_r($postData);
+        //print_r($postData);
         if (empty($postData['brand']) || empty($postData['btus']) || empty($postData['description']) || empty($postData['location'])) {
             throw new Exception("Todos os campos do ar-condicionado são obrigatórios.");
         }
